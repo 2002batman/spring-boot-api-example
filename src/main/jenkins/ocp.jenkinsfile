@@ -12,19 +12,18 @@ pipeline {
     }
     
     stages {
-	    stage {
-	        stage ( 'preamble' ) {
-	        	steps {
-	        	    script {
-	        	        openshift.withCluster () {
-	        	        	openshift.withProject() {
-	        	        	    echo "using project: ${openshift.project()}"
-	    	        	    }
-	    	        	}
-					}
-	    	    }
-	    	}
-		}
+        stage ( 'preamble' ) {
+        	steps {
+        	    script {
+        	        openshift.withCluster () {
+        	        	openshift.withProject() {
+        	        	    echo "using project: ${openshift.project()}"
+    	        	    }
+    	        	}
+				}
+    	    }
+    	}
+    	
 		stage('cleanup') {
 			steps {
 				script {
