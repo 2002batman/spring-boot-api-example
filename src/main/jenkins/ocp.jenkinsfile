@@ -11,51 +11,53 @@ pipeline {
         timeout(time: 20, unit: 'MINUTES')
     }
     
-    stage {
-        stage ( 'preamble' ) {
-        	steps {
-        	    script {
-        	        openshift.withCluster () {
-        	        	openshift.withProject() {
-        	        	    echo "using project: ${openshift.project()}"
-    	        	    }
-    	        	}
-				}
-    	    }
-    	}
-	}
-	stage('cleanup') {
-		steps {
-			script {
-				openshift.withCluster() {
-					openshift.withProject() {
-						openshift.selector("all", [ template : templateName ]).delete() 
-						if (openshift.selector("secrets", templateName).exists()) { 
-							openshift.selector("secrets", templateName).delete()
+    stages {
+	    stage {
+	        stage ( 'preamble' ) {
+	        	steps {
+	        	    script {
+	        	        openshift.withCluster () {
+	        	        	openshift.withProject() {
+	        	        	    echo "using project: ${openshift.project()}"
+	    	        	    }
+	    	        	}
+					}
+	    	    }
+	    	}
+		}
+		stage('cleanup') {
+			steps {
+				script {
+					openshift.withCluster() {
+						openshift.withProject() {
+							openshift.selector("all", [ template : templateName ]).delete() 
+							if (openshift.selector("secrets", templateName).exists()) { 
+								openshift.selector("secrets", templateName).delete()
+							}
 						}
 					}
 				}
 			}
 		}
-	}
-	
-	stage('create') {
-		when {
-			expression {
-				openshift.withCluster() {
-					return !openshift.selector ( 'bc', templateName ).exists();
-      			}
-    		}
-  		}
-  		
-		steps {
-			script {
-				openshift.withCluster() {
-					openshift.withProject() {
-						openshift.newApp(templatePath) 
+		
+		stage('create') {
+			when {
+				expression {
+					openshift.withCluster() {
+						return !openshift.selector ( 'bc', templateName ).exists();
+	      			}
+	    		}
+	  		}
+	  		
+			steps {
+				script {
+					openshift.withCluster() {
+						openshift.withProject() {
+							openshift.newApp(templatePath) 
+						}
 					}
 				}
 			}
-		}
-	}	
+		}	
+    }
 }
