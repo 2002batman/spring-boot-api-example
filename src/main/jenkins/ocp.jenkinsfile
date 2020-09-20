@@ -1,11 +1,7 @@
 def templateName = 'spring-boot-api'
 
 pipeline {
-	agent {
-		node {
-		    label 'redhat-openjdk18-openshift'
-		}
-	} 
+	agent any
    options {
         // set a timeout of 20 minutes for this pipeline
         timeout(time: 20, unit: 'MINUTES')
