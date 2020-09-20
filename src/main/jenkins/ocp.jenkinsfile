@@ -3,7 +3,7 @@ def templateName = 'spring-boot-api'
 pipeline {
 	agent {
 		node {
-		    label templateName
+		    label 'redhat-openjdk18-openshift'
 		}
 	} 
    options {
