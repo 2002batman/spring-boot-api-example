@@ -1,4 +1,6 @@
 def templateName = 'spring-boot-api'
+//def templatePath = 'redhat-openjdk18-openshift:1.8~https://github.com/2002batman/spring-boot-api-example.git'
+def templatePath = 'https://github.com/2002batman/spring-boot-api-example.git'
 
 pipeline {
 	agent any
