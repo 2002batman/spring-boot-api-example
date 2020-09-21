@@ -13,7 +13,7 @@ pipeline {
         stage ( 'preamble' ) {
         	steps {
         	    script {
-//        	        openshift.withCluster () {
+        	        openshift.withCluster () {
         	        	openshift.withProject() {
         	        	    echo "using project: ${openshift.project()}"
     	        	    }
@@ -37,6 +37,16 @@ pipeline {
 			}
 		}
 		
+		stage('build'){
+		    steps{
+		        gradle{
+		            tasks('clean')
+		            tasks('build')
+		        }
+		    }
+		}
+	}
+
 //		stage('create') {
 //			when {
 //				expression {
@@ -57,17 +67,6 @@ pipeline {
 //			}
 //		}	
 //    }
-
-	stage('build'){
-	    steps{
-	        gradle{
-	            tasks('clean')
-	            tasks('build')
-	        }
-
-	    }
-
-	}
 
 //	stage('build') {
 //		steps {
