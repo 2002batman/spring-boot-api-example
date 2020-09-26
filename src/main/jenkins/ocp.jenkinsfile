@@ -3,12 +3,7 @@ def templateName = 'spring-boot-pipeline'
 def templatePath = 'https://github.com/2002batman/spring-boot-api-example.git'
 
 pipeline {
-   agent {
-       node {
-           label 'maven'
-       }
-
-   }
+   agent any
 
    options {
         // set a timeout of 20 minutes for this pipeline
