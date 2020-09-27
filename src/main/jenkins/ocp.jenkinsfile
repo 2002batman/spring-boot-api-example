@@ -38,7 +38,16 @@ pipeline {
 			}
 		}
 		
-		stage('build'){
+		stage('build gradle'){
+		    steps{
+		        gradle{
+		            tasks('clean')
+		            tasks('build')
+		        }
+		    }
+		}
+
+		stage('build oc'){
 		    steps{
 		        gradle{
 		            tasks('clean')
